@@ -15,6 +15,20 @@ async function seed() {
   console.log('🌱 Iniciando seed...\n');
 
   try {
+    console.log('Executando criação de tabelas...');
+    const fs = require('fs');
+    const schemaSql = fs.readFileSync('./drizzle/0000_overjoyed_black_tom.sql', 'utf8');
+    await client.query(schemaSql);
+    console.log('✅ Tabelas verificadas/criadas!');
+  } catch (e) {
+    if (e.code === '42P07') {
+      console.log('✅ As tabelas já existem.');
+    } else {
+      console.log('Aviso ao criar tabelas:', e.message);
+    }
+  }
+
+  try {
     // 1. Criar barbearia
     const { rows: existing } = await client.query(
       `SELECT id FROM barbershops WHERE slug = 'minha-barbearia' LIMIT 1`
