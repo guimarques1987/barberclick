@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "start": "next build && next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.2",
